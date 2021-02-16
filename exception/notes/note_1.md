@@ -13,3 +13,5 @@
 |SyntaxError|语法错误|
 |TypeError|不同类型间的无效操作|
 |ZeroDivisionError|除数为0|
+
+[详细异常表格](http://bbs.fishc.com/thread-45814-1-1.html)
