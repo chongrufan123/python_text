@@ -1,4 +1,4 @@
-## easygui
+# easygui
 
 [EasyGUI学习中文文档](https://fishc.com.cn/forum.php?mod=viewthread&tid=46069&extra=page%3D1%26filter%3Dtypeid%26typeid%3D403)
 
