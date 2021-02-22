@@ -7,6 +7,7 @@
     * [调用未绑定的父类方法](#调用未绑定的父类方法)
     * [使用super函数](#使用super函数)
     * [多重继承](#多重继承)
+* [备注](#备注)
 
 <!-- vim-markdown-toc -->
 ## OO的特征
@@ -38,3 +39,5 @@ class DerivedClassName(BaseClassName)
 
 class Derive(Base1, Base2, Base3...)
 
+## 备注
+__init__特殊方法不能返回除了none之外的任何对象
