@@ -42,21 +42,18 @@ class MyTimer:
             print('现在计时结束')
 
     def _calu(self):
-        jie = 0
+        self.timer = []
         self.laster = '总共运行了'
         for each in range(6):
-            self.timer.append(self.end[5 - each] - self.begin[5 - each])
-            if jie:
-                jie = 0
-                self.timer[each] -= 1
-            if self.timer[each] > 0:
-                self.laster = self.laster + str(self.timer[each]) + self.dan[5 - each]
-            elif self.timer[each] < 0:
-                self.timer[each] = self.timer[each] + self.jiewei[4 - each]
-                self.laster = self.laster + str(self.timer[each] ) + self.dan[5 - each]
-                jie = 1
-
-                
-
+            self.timer.append(self.end[each] - self.begin[each])
+            if self.timer[each] < 0:
+                self.timer[each] = self.jiewei[each - 1] + self.timer[each]
+                for eeach in range(1, each+1):
+                    if self.timer[each - eeach]:
+                        self.timer[each - eeach] -= 1
+                        break
+        for each in range(6):
+            if self.timer[each]:
+                self.laster = self.laster + str(self.timer[each] ) + self.dan[each]
         self.begin = 0
         self.end = 0
