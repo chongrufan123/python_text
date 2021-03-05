@@ -137,3 +137,15 @@ request.urlopen(url)    //以POST的形式访问URL
     ```
     import re
     ``` 
+-   相关方法
+    ```
+    re.search(r匹配的字符, 目标字符串)  //匹配第一个目标字符串, 返回rematch类型
+    re.findall(r匹配字符, 目标字符) //将所有目标字符放到一个列表中
+    re.compile(r匹配对象)   //编译匹配对象, 之后search或findall就可以不用写匹配的字符了
+    ```
+    rematch类型相关的方法
+    ```
+    result.group    //匹配对应匹配的词组
+    result.start    //匹配对应开始的范围
+    result.end      //匹配对应结束的范围
+    result.span     //匹配对应的范围
