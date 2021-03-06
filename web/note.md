@@ -68,6 +68,8 @@ request.urlopen(url)    //以POST的形式访问URL
         opener.open(url)
 
 ## Beautiful Soup
+>   参考文件:[Beautiful](https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/index.html)
+
 -   导入
     ```
     from bs4 import BeautifulSoup
