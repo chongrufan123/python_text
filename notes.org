@@ -1,0 +1,579 @@
+#+TITLE: python个人笔记整理
+#+AUTHOR: FAN Chongru
+#+EMAIL: chongrufan123@gmail.com
+
+* 模块
+每一个程序就是模块
+
+** 命名空间
+函数前面要加上模块名如hello.hi()
+
+** 模块的导入
+-   import 文件名
+-   from 模块名 import 函数名  
+    然后之后就只要输入函数名就可以
+-   import 模块名 as 别名  
+    相当于给模块起个别名, 之后调用只打别名就可以
+
+** if __name__ = '__main__'
+
+当在主程序中调用__name__时返回__main__  
+当在某一个模块中调用__name__时返回模块名  
+所以在模块中调用
+#+begin_src python
+if __name__ == '__main__':
+    程序体
+//当当前程序作为主程序调用时执行下面的语句
+#+end_src
+
+** 搜索路径
+#+begin_src python
+import sys
+sys.path
+得到python模块导入的路径
+['', '/usr/lib/python37.zip', '/usr/lib/python3.7', '/usr/lib/python3.7/lib-dynload', '/home/pi/.local/lib/python3.7/site-packages', '/usr/local/lib/python3.7/dist-packages', '/usr/lib/python3/dist-packages']
+一般是放在site-packages文件中
+#+end_src
+当模块在python模块导入的路径或者本路径中时可以成功导入
+
+** package包
+1.  创建一个文件夹, 用来存放相关的模块, 文件夹的名字即为包的名字
+2.  在文件夹中创建__init__.py的模块文件, 内容可以为空
+3.  将相关的模块放入文件夹
+
+当需要导入包的模块时
+~import 包名.模块名~
+** 内置模块
+当要学习一个模块时可以先导入他
+~import 模块名~
+
+然后查看他的doc文档
+
+~print(模块名.__doc__)~
+
+然后看看他们函数
+
+~dir(模块名)~
+
+如果有__all__属性的话, __all__里面的方法和属性是作者希望我们调用的, 可以查看
+
+~模块名.__all__~
+
+当你全部导入模块的时候
+~from 模块名 import *~
+
+导入的将是__all__中的模块  
+__file__函数提供了源代码的位置
+~模块名.__file__~
+
+* 文件
+** 打开文件
+open(file, mode, )
+*** 打开格式
+r   只读  
+w   以写入的方式打开  
+x   如果文件存在，使用这个格式出现异常  
+a   写入方式，如果文件存在，在末尾追加
+b   二进制打开  
+t   文本模式打开  
+'+'   可读写模式  
+U   通用换行符支持  
+
+*** 文件对象方法
+f.close()   关闭文件  
+
+f.read(size=-1)     从文件中读取size个字符
+
+f.readline()        以写入模式打开
+
+f.tell()            告诉现在指针在哪里
+
+f.seek(offset, from)    文件中移动指针，从from偏移offset个字节（1代表当前位置，2代表末尾）
+
+f.write(str)        将字符串str写入文件
+
+f.writelines(seq)           向文件写入字符串序列seq，seq是一个可迭代对象
+   
+** os模块中的关于文件的函数
+
+| 函数名            | 功能                     |
+|-------------------+--------------------------|
+| gitcwd()          | 返回当前工作目录         |
+| chdir(pash)       | 改变工作目录             |
+| listdir(pash='.') | 列出目录中的文件         |
+| mkdir(pash)       | 创建当前目录             |
+| makedirs(pash)    | 创建多级目录             |
+| remove(pash)      | 删除文件                 |
+| rmdir(pash)       | 删除空目录               |
+| removedirs(pash)  | 递归删除空目录           |
+| rename(old, new)  | 将文件old更换为new       |
+| system(command)   | 运行系统命令             |
+| curdir            | 指代当前目录             |
+| pardir            | 指代上一级目录           |
+| sep               | 输出操作系统的路经分隔符 |
+| name              | 当前操作系统             |
+| linesep           | 当前平台使用的行终止符   |
+
+
+** os.path模块中函数
+
+| 函数名                  | 功能                         |
+|-------------------------+------------------------------|
+| basename(path)          | 去掉目录路径，单独返回文件名 |
+| dirname(path)           | 去掉文件名，返回路径         |
+| split(path)             | 分割文件名和路径，返回元组   |
+| splitext(path)          | 分离文件名和扩展名           |
+| getsize(file)           | 返回文件的尺寸，单位字节     |
+| getatime(file)          | 返回最近访问时间             |
+| getctime(file)          | 返回文件创建时间             |
+| getmtime(file)          | 返回文件的最近修改时间       |
+| time.gmtime()           | 换算时间为英国时间           |
+| time.localtime()        | 换算时间为北京时间           |
+| 下面函数返回True或Fulse |                              |
+| exists(path)            | 判断路径是否存在             |
+| isabs(path)             | 判断指定路径是否是绝对路径   |
+| isdir(path)             | 判断指定路径是否是相对路径   |
+| isfile(path)            | 判断是否是一个文件           |
+
+** pickle 以二进制文件的形式保存对象
+
+- 要用wb形式打开写入文件
+- 一般来说pickle文件后缀是.pkl
+- pickle.dump(对象,文件) 将对象放入文件
+- pickle.load(文件) 将文件内的对象读取出来
+- 打开pickle文件一般用rb形式
+
+* class-object
+** OO的特征
+1. 封装  
+
+对外隐藏对象的工作细节
+
+2. 继承
+
+子类自动共享父类之间的数据和方法的机制
+
+3. 多态
+
+可以对不同类的对象调用相同的方法，产生不同的结果
+
+** 继承
+
+class DerivedClassName(BaseClassName)  
+       子类             父类/基类
+
+子类和父类相同定义的方法，子类会把父类覆盖掉  
+
+*** 调用未绑定的父类方法  
+ 在方法中加入 BaseClassName.__init__(self)
+
+*** 使用super函数
+
+~super().__init__()~
+
+*** 多重继承
+
+class Derive(Base1, Base2, Base3...)
+
+** 组合
+把一个不是很有继承关系的class搞在一起
+#+begin_src python
+class Fish:
+    def __init__(self, x):
+        self.num = x
+class Turtle:
+    def __init__(self, x):
+        self.num = x
+class poll:
+    def __init__(self, x, y):
+        self.turtle = Turtle(x)
+        self.fish = Fish(y)
+    def print_num(self):
+        print(self.turtle.num, self.fish.num)
+#+end_src
+
+** 绑定
+python要有实例概念才可以被调用,也就是在类的函之下要调用函数本身
+
+** BIF
+- issubclass(class, classinfo)
+
+检查class是否为classinfo的子类
+1. 自身会被认为是自身的子类
+2. classinfo可以是一个元组，然后看看class是不是其中一个的子类
+- isinstance(object, classinfo)
+
+检查object是否是classinfo的实例对象
+1. class可以是一个元组
+2. 继承于子类的实例对象同样可以被认为是该父类的实例对象
+- hasattr(object, name)
+
+检测object中name属性是否存在
+- getattr(object, name[, default]))
+
+获取object中name属性的值，如果name不存在抛出异常，但是如果有设置defaule，将返回default
+- setattr(object, name, value)
+
+新在objext中生成一个name,并赋值为value
+- delattr(object, name)
+
+在object中删除name属性,如果不存在的话抛出错误
+- property(fget, fset, fdel)
+
+** 备注
+- __init__特殊方法不能返回除了none之外的任何对象
+- 属性名和方法相同会覆盖掉
+
+* 异常
+** 异常类型
+
+| 常见异常          | 描述                                       |
+|-------------------+--------------------------------------------|
+| AssertionError    | 断言语句失败                               |
+| AttributeError    | 尝试访问未知的对象属性                     |
+| IndentationError  | 缩进错误                                   |
+| IndexError        | 索引超出序列的范围                         |
+| KeyError          | 字典中查找一个不存在的关键字               |
+| NameError         | 尝试访问一个不存在的变量                   |
+| OSError           | 操作系统的异常（例如打开一个不存在的文件） |
+| OverflowError     | 数值运算超出数值                           |
+| SyntaxError       | 语法错误                                   |
+| TypeError         | 不同类型间的无效操作                       |
+| ZeroDivisionError | 除数为0                                    |
+
+[[http://bbs.fishc.com/thread-45814-1-1.html][详细异常表格]]
+
+** try-except语句
+#+begin_src python
+try:  
+    检测范围  
+except Exception[as reason]:  
+    出现异常后的处理代码
+#+end_src
+后面加as reason在reason里存储异常的原因
+
+同时捕获两种异常可以用元组
+
+** try-finally语句
+#+begin_src python
+try:  
+    检测范围  
+except Exception[as reason]:  
+    出现异常后的代码
+finally:
+    无论如何都会被执行的代码  
+#+end_src
+
+** raise 语句
+引发异常
+~raise 异常名字(异常说明)~
+
+* 魔法方法
+** 构造和折构
+- __init__(self[, ...])
+对象初始化时进行调用
+- __new__(cls[, ...])
+当继承的父类的方法不可改变时可以重写new方法,在init方法之前调用  
+是调用的第一个方法
+#+begin_src python
+class CapStr(str):
+    def __new__(cls, string):
+        string = string.upper() //式string变成大写
+        return str.__new__(cls, string)
+#+end_src
+
+- __del__(self)
+当所有指向该类的对象都del之后触发该方法
+
+** 算数运算的魔法方法
+~divmod()    //生成一个元组,前面放整除结果,后面放余数~
+
+*** 算术运算
+| 魔法方法                       | 作用                       | 符号     |   |
+|--------------------------------+----------------------------+----------+---|
+| __add__(self, other)           | 定义加法行为               | +        |   |
+| __sub__(self, other)           | 定义减法行为               | -        |   |
+| __mul__(self, other)           | 定义乘法行为               | *        |   |
+| __truediv__(self, other)       | 定义真除法行为             | /        |   |
+| __floordiv__(self, other)      | 定义整数除法行为           | //       |   |
+| __mod__(self, other)           | 定义取模行为               | %        |   |
+| __divmod__(self, other)        | 定义当被divmod()调用的行为 | divmod() |   |
+| __pow__(self, other[, modulo]) | 定义当被power()调用的行为  | **       |   |
+| __lshift__(self, other)        | 定义按位左移位             | \<\<     |   |
+| __rshift__(self, other)        | 定义按位右移位             | \>\>     |   |
+| __and__(self, other)           | 定义按位与                 | &        |   |
+| __xor__(self, other)           | 定义按位异或               | ^        |   |
+| __or__(self, other)            | 定义按位或                 | \        |   |
+
+*** 反运算
+运算过程中后面的那个数,当第一个运算符没有定义时采用第二个运算符的反运算进行运算
+
+| 魔法方法                   | 作用                       | 符号     |   |
+|----------------------------+----------------------------+----------+---|
+| __radd__(self, other)      | 定义加法行为               | +        |   |
+| __rsub__(self, other)      | 定义减法行为               | -        |   |
+| __rmul__(self, other)      | 定义乘法行为               | *        |   |
+| __rtruediv__(self, other)  | 定义真除法行为             | /        |   |
+| __rfloordiv__(self, other) | 定义整数除法行为           | //       |   |
+| __rmod__(self, other)      | 定义取模行为               | %        |   |
+| __rdivmod__(self, other)   | 定义当被divmod()调用的行为 | divmod() |   |
+| __rpow__(self, other)      | 定义当被power()调用的行为  | **       |   |
+| __rlshift__(self, other)   | 定义按位左移位             | \<\<     |   |
+| __rrshift__(self, other)   | 定义按位右移位             | \>\>     |   |
+| __rand__(self, other)      | 定义按位与                 | &        |   |
+| __rxor__(self, other)      | 定义按位异或               | ^        |   |
+| __ror__(self, other)       | 定义按位或                 | \        |   |
+
+*** 赋值运算
+自己的一些行为
+
+| 魔法方法                        | 作用                      | 符号  |   |
+|---------------------------------+---------------------------+-------+---|
+| __iadd__(self, other)           | 定义加法行为              | +=    |   |
+| __isub__(self, other)           | 定义减法行为              | -=    |   |
+| __imul__(self, other)           | 定义乘法行为              | *=    |   |
+| __itruediv__(self, other)       | 定义真除法行为            | /=    |   |
+| __ifloordiv__(self, other)      | 定义整数除法行为          | //=   |   |
+| __imod__(self, other)           | 定义取模行为              | %=    |   |
+| __ipow__(self, other[, modulo]) | 定义当被power()调用的行为 | **=   |   |
+| __ilshift__(self, other)        | 定义按位左移位            | \<\<= |   |
+| __irshift__(self, other)        | 定义按位右移位            | \>\>= |   |
+| __iand__(self, other)           | 定义按位与                | &=    |   |
+| __ixor__(self, other)           | 定义按位异或              | ^=    |   |
+| __ior__(self, other)            | 定义按位或                | \     | = |
+
+*** 一元操作符
+| 魔法方法         | 作用         | 符号  |
+|------------------+--------------+-------|
+| __pos__(self)    | 定义正号     | +x    |
+| __neg__(self)    | 定义负号     | -x    |
+| __abs__(self)    | 定义绝对值   | abs() |
+| __invert__(self) | 定义按位求反 | ~x    |
+
+*** 比较操作符
+| 魔法方法            | 作用           | 符号 |
+|---------------------+----------------+------|
+| __lt__(self, other) | 定义小于号     | \<   |
+| __le__(self, other) | 定义小于等于号 | \<=  |
+| __eq__(self, other) | 定义等于号     | ==   |
+| __ne__(self, other) | 定义不等号     | !=   |
+| __gt__(self, other) | 定义大于号     | \>   |
+| __ge__(self, other) | 定义大于等于号 | \>=  |
+
+*** 静态方法
+当类中的属性前面没有self时就是静态方法,不会绑定在实例对象上,只会在类中生成一次  
+
+当类中的方法要成为静态方法,需要在前面加上
+
+~@staticmethod   *表示static()是静态方法~
+
+** 鸭子类型
+当看到一只鸟走起来像鸭子, 游泳起来像鸭子, 叫起来也像鸭子, 那么这只鸟就可以被称为鸭子  
+
+只要两个类, 他们在函数中被调用的方法和属性相同的话, 他们都可以被调用
+
+** 访问属性
+| 魔法方法                       | 作用                                 |
+|--------------------------------+--------------------------------------|
+| __getattr__(self, name)        | 定义当用户试图访问一个不存在的属性时 |
+| __getattribute__(self, name)   | 定义该属性被访问时                   |
+| __setattr__(self, name, value) | 定义当一个属性被设置时               |
+| __delattr__(self, name)        | 定义当一个属性被删除时               |
+
+** 描述符
+就是将某种特殊类型的类的实例指派给另一个类的属性
+| 魔法方法                       | 作用                 |
+|--------------------------------+----------------------|
+| __get__(self, instance, owner) | 用于访问属性         |
+| __set__(self, instance, value) | 在属性分配操作中调用 |
+| __delete__(self, instance)     | 控制删除操作         |
+
+self是描述符所在的类的实例, instance是被指派的类的实例, owner是被指派的类
+
+** 容器类型
+| 魔法方法                      | 作用                                             |
+|-------------------------------+--------------------------------------------------|
+| __len__(self)                 | 定义当len()被调用时的行为                        |
+| __getitem__(self, key)        | 定义获取容器指定元素的行为,相当于self[key]       |
+| __setitem__(self, key, value) | 定义设置容器中指定元素的行为,类似self[key]=value |
+| __delitem__(self,key)         | 定义删除容器中指定元素的行为                     |
+| __iter__(self)                | 定义当迭代容器中的元素时的行为                   |
+| __reversed__(self)            | 定义当被reversed()调用时的行为                   |
+| __contains__(self, item)      | 定义当使用成员测试符(in or not in)时的行为       |
+
+** 迭代器
+#+begin_src python
+iter()  //构建迭代器
+next()  //依次输出迭代器的内容
+#+end_src
+** 生成器
+~yield~
+
+到达yield之后程序自动被挂起, 并返回yield后面的值, 下一次会接着下一个yield继续走  
+最大的作用是可以保留现场, 下次执行函数直接从上次结束的地方开始
+
+*** 协同程序
+可以运行的的独立函数调用, 函数在此暂停或挂起, 并在需要的时候从程序离开的地方继续或重新开始
+
+** 备注
+1. 类的属性名和方法名不能相同
+2. super对象没有__getattr__()对象
+
+* easygui
+
+[[https://fishc.com.cn/forum.php?mod=viewthread&tid=46069&extra=page%3D1%26filter%3Dtypeid%26typeid%3D403][EasyGUI学习中文文档]]
+1. 导入
+~import easygui as g~
+
+之后就可以用g.msgbox()来实现
+
+2. 使用  
+~msgbox(信息, 标题)~
+
+* web
+** urllib包
+
+*** request模块
+#+begin_src python
+request.urlopen(url)    //读取url的数据
+选项:
+timeout:设置超连的时间, 单位是秒
+html.decode("utf-8")    //解码, 将其他编码的字符串转换成Unicode格式
+#+end_src
+#+begin_src python
+data是字典的格式
+urllib.parse.urlencode(data).encode('utf-8')    将data数据编码为utf-8的格式
+url = urllib.request.Request(url, date)
+request.urlopen(url)    //以POST的形式访问URL
+如果data是none, 那么请求就是GET方式
+#+end_src
+*** 相应-请求
+客户端发出请求, 服务端做出响应
+
+** 编码问题
+1.  中文输出乱码  
+
+    获得此时的默认编码
+    #+begin_src python
+    import sys
+    sys.getdefaultencoding()
+    #+end_src
+    
+2.  Unicode
+
+    Unicode码是统一各国文字的编码, 被称为万国码.他为每种语言设置了唯一的二进制编码表示形式  
+    从Unicode到其他编码系统叫做编码, 从其他编码系统到Unicode是解码
+** 隐藏
+修改headers
+
+1.  在Request时就加入head, 里面以字典形式存放要添加的内容
+2.  在Request之后用req.add_header(key, value)来追加
+
+** 代理
+-   步骤
+    1.  参数是一个字典{'类型' : '代理ip:端口号'}  
+
+        ~proxy_support = urllib.request.ProxyHandler({})~
+    2.  定制, 创建一个opener  
+
+        ~opener = urllib.request.build_opener(proxy_support)~
+    3.  安装opener  
+
+        ~urllib.request.install_opener(opener)~
+    3.  调用opener  
+
+        ~opener.open(url)~
+
+** Beautiful Soup
+[[https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/index.html][参考文件Beautiful]]
+
+-   导入
+
+    ~from bs4 import BeautifulSoup~
+-   传入数据  
+
+    可以导入一个文件句柄, 也可以导入一段字符串, 默认自动选择解析器, 但也可以手动选择解析器
+
+    ~BeautifulSoup(open("index.html")~
+-   对象的种类
+
+    BeautifulSoup将复杂的html文档转换为一个复杂的树形结构, 每个节点都是python对象, 所有对象可以归纳为4种
+    -   Tag
+        -   Name  
+
+            每个tag都有自己的Name, 通过tag.name获取
+
+            ~tag.name    获得tag的name~
+        -   Attributes  
+
+            一个tag可能有多个属性, 可以被添加, 删除和修改, 操作方法和字典一样
+        #+begin_src python
+            tag.attrs   字典形式返回属性
+            tag['class']    返回属性的值
+        #+end_src
+            
+        -   多值属性  
+
+            可以包含多个值的属性, 多值属性返回值是list
+
+            ~css_soup.p['属性名']~
+    -   NevigableString  
+
+        字符串常被包含在tag中, BS用NevigableString包装tag的字符串
+
+        ~unicode(tag.string) 将NacigableString选项转变为unicode字符串~
+    -   BeautifulSoup  
+
+        表示文档的全部内容
+    -   comment  
+
+        文档的注释部分, comment是一个特殊类型的NavigableString对象
+-   遍历文档树
+    -   子节点  
+
+        一个tag包含的多个字符串和 其他的tag被称为这个tag的子节点
+    -   tag的名字
+      #+begin_src python
+        soup.head   获取tag的head
+        soup.title  获取tag的title
+        soup.body.b 获取body中第一个body
+        soup.a      获取第一个以a开头的属性
+        soup.find_all('a')  获取所有以a开头的属性
+        tag.contents    将tag的子节点以列表形式列出
+        for child in title_tag.children:
+            print(child)    //对tag的子节点循环
+        for child in head_tag.descendants:
+            print(child)    //对tag的子孙节点进行递归循环
+        title_tag.string    //如果tag只有一个子节点, 输出之, 如果有多个, 输出none
+        for child in soup.strings:
+            print(child)    //循环获取soup中的多个字符串
+      #+end_src
+        
+    -   父节点  
+        每个tag或字符串都有父节点
+        #+begin_src python
+        title_tag.parent    title的父节点
+        for parent in link.parents:
+            print(parent.name)  //遍历标签到根节点的所有节点
+        #+end_src
+        
+** 正则表达式
+-   模块的导入
+   
+    ~import re~
+-   相关方法
+  #+begin_src python
+    re.search(r匹配的字符, 目标字符串)  //匹配第一个目标字符串, 返回rematch类型
+    re.findall(r匹配字符, 目标字符) //将所有目标字符放到一个列表中
+    re.compile(r匹配对象)   //编译匹配对象, 之后search或findall就可以不用写匹配的字符了
+  #+end_src
+    
+    rematch类型相关的方法
+    #+begin_src python
+    result.group    //匹配对应匹配的词组
+    result.start    //匹配对应开始的范围
+    result.end      //匹配对应结束的范围
+    result.span     //匹配对应的范围
+    #+end_src
+
+
